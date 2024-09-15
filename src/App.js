@@ -3,12 +3,12 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  const [apiData, setApiData] = useState(null);
+  const [countries, setCountries] = useState([]);
 
   useEffect(() => {
-    fetch('/api/page1')
+    fetch('/countries') // Fetching from the `/countries` endpoint
       .then(response => response.json())
-      .then(data => setApiData(data))
+      .then(data => setCountries(data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
@@ -25,12 +25,27 @@ function App() {
         >
           Learn React
         </a>
-        {apiData && (
-          <div>
-            <h2>Data from API:</h2>
-            <p>{apiData.message}</p>
-          </div>
-        )}
+        <h2>Countries List:</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Capital</th>
+              <th>Area</th>
+            </tr>
+          </thead>
+          <tbody>
+            {countries.map(country => (
+              <tr key={country.id}>
+                <td>{country.id}</td>
+                <td>{country.name}</td>
+                <td>{country.capital}</td>
+                <td>{country.area}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </header>
     </div>
   );
